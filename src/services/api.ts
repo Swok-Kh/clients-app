@@ -80,3 +80,4 @@ const updateClient = (client: IClientFull): Promise<any> => {
 };
 
 export { getClients, addClient, updateClient };
+export type { IClient, IClientFull };
