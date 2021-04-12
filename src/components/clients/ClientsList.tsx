@@ -7,7 +7,7 @@ const Clients = () => {
   const { data, isLoading, error } = useQuery("clients", getClients);
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Erorr</p>;
+  if (error) return <p>Error</p>;
 
   return (
     <ul className="space-y-4">

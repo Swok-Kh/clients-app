@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClientProvider, QueryClient } from "react-query";
+import ModalProvider from "./components/modal/ModalProvider";
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <ModalProvider>
+        <App />
+      </ModalProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root"),

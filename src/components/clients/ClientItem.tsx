@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IClientFull } from "../../services/api";
+import { ModalContext } from "../modal/ModalProvider";
+import Button from "../UI/Button";
 
 interface IClientItemProps {
   client: IClientFull;
 }
 
 const ClientItem = ({ client }: IClientItemProps) => {
-  const { id, firstName, lastName, avatarUrl, phone } = client;
+  const { openModal } = useContext(ModalContext);
+  const { firstName, lastName, avatarUrl, phone } = client;
 
   return (
     <li className="shadow-md p-4 rounded-lg flex items-center">
@@ -25,13 +28,11 @@ const ClientItem = ({ client }: IClientItemProps) => {
         </h2>
         <p className="text-gray-500">tel: {phone || "no phone"}</p>
       </div>
-      <button
+      <Button
         className="ml-auto"
-        onClick={() => {
-          console.log(id);
-        }}>
-        Edit
-      </button>
+        label="Edit"
+        onClick={() => openModal(client)}
+      />
     </li>
   );
 };
