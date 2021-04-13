@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect } from "react";
+import { FunctionComponent, MouseEvent, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IClientFull, IClient } from "../../services/api";
 import { ClientContext } from "../clients/ClientsProvider";
@@ -37,11 +37,17 @@ const Modal: FunctionComponent<IModalProps> = ({ client }) => {
     closeModal();
   };
 
+  const handleBackdropClick = (event: MouseEvent) => {
+    if (event.target === event.currentTarget) closeModal();
+  };
+
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-50 flex items-center justify-center">
-      <div className="shadow-md bg-white rounded-md p-4">
+    <div
+      className="fixed top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-50 flex items-center justify-center"
+      onClick={handleBackdropClick}>
+      <div className="shadow-md bg-white rounded-md p-4 max-h-screen overflow-y-auto">
         <form
-          className="flex flex-col space-y-2"
+          className="flex flex-col space-y-2 "
           onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-xl font-medium">
             {client ? "Edit client" : "Add client"}
