@@ -5,6 +5,7 @@ interface IButtonProps {
   type?: "button" | "submit" | "reset";
   onClick?: Function;
   className?: string;
+  variant?: "filled" | "outlined";
 }
 
 const Button: FunctionComponent<IButtonProps> = ({
@@ -12,14 +13,17 @@ const Button: FunctionComponent<IButtonProps> = ({
   onClick,
   className,
   type,
+  variant = "filled",
 }) => {
+  const filledStyles = "text-white bg-indigo-500 hover:bg-indigo-600";
+  const outlinedStyles = "bg-white text-indigo-500 hover:bg-indigo-100";
   const styles = [
     "p-2",
-    "bg-indigo-500",
     "font-semibold",
-    "text-white",
-    "hover:bg-indigo-600",
     "rounded-md",
+    "shadow-md",
+    "transition-colors",
+    variant === "filled" ? filledStyles : outlinedStyles,
     className,
   ].join(" ");
   return (

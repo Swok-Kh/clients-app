@@ -7,17 +7,20 @@ const ClientsList: FunctionComponent = () => {
   const { clients, error } = useContext(ClientContext);
 
   return (
-    <ul className="space-y-4">
+    <div className="mt-20">
       {error && (
         <p className="text-center text-2xl italic">
           Sorry. Something went wrong. Try later...
         </p>
       )}
-      {clients &&
-        clients.map((client: IClientFull) => (
-          <ClientItem key={client.id} client={client} />
-        ))}
-    </ul>
+      {clients && (
+        <ul className="space-y-4">
+          {clients.map((client: IClientFull) => (
+            <ClientItem key={client.id} client={client} />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

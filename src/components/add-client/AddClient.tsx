@@ -7,10 +7,11 @@ const AddClient: FunctionComponent = () => {
   const { openModal } = useContext(ModalContext);
   const { error } = useContext(ClientContext);
   return (
-    <div className="fixed bottom-2 right-2">
+    <div className="ml-auto">
       {!error && (
         <Button
-          label="Add"
+          variant="outlined"
+          label="Add client"
           onClick={() => {
             openModal();
           }}

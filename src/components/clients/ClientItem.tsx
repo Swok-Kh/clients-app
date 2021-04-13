@@ -13,7 +13,7 @@ const ClientItem: FunctionComponent<IClientItemProps> = ({ client }) => {
 
   return (
     <li className="shadow-md p-4 rounded-lg flex items-center">
-      <div className="w-20 h-20 rounded-full bg-gray-200 overflow-hidden mr-4">
+      <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gray-200 overflow-hidden mr-4 md:mr-8">
         {avatarUrl && (
           <img
             className="w-full h-full object-cover object-center"
@@ -23,10 +23,12 @@ const ClientItem: FunctionComponent<IClientItemProps> = ({ client }) => {
         )}
       </div>
       <div>
-        <h2 className="text-xl font-medium">
+        <h2 className="text-md md:text-xl font-medium">
           {firstName} {lastName}
         </h2>
-        <p className="text-gray-500">tel: {phone || "no phone"}</p>
+        <p className="text-xs md:text-base text-gray-500 ">
+          tel: {phone || "no phone"}
+        </p>
       </div>
       <Button
         className="ml-auto"

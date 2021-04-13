@@ -33,13 +33,14 @@ const ModalProvider: FunctionComponent<IModalProviderProps> = ({
 
   const openModal = (client: IClientFull | undefined) => {
     if (client) setClient(client);
-
     setIsOpen(true);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setClient(null);
     setIsOpen(false);
+    document.body.style.overflow = "";
   };
 
   const handleModalKeyDown = useCallback((event: KeyboardEvent) => {
