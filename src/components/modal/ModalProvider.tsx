@@ -1,4 +1,4 @@
-import React, { createContext, ReactChild, useState } from "react";
+import { createContext, FunctionComponent, ReactChild, useState } from "react";
 import { IClientFull } from "../../services/api";
 import Modal from "./Modal";
 
@@ -18,7 +18,9 @@ export const ModalContext = createContext<IModalContext>({
   closeModal: () => {},
 });
 
-const ModalProvider = ({ children }: IModalProviderProps) => {
+const ModalProvider: FunctionComponent<IModalProviderProps> = ({
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [client, setClient] = useState<IClientFull | null>(null);
 

@@ -1,9 +1,9 @@
-import React from "react";
+import { FunctionComponent } from "react";
 import { useQuery } from "react-query";
 import { getClients, IClientFull } from "../../services/api";
 import ClientItem from "./ClientItem";
 
-const Clients = () => {
+const Clients: FunctionComponent = () => {
   const { data, isLoading, error } = useQuery("clients", getClients);
 
   if (isLoading) return <p>Loading...</p>;

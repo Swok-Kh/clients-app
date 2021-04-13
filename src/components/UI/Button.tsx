@@ -1,12 +1,18 @@
-import React from "react";
+import { FunctionComponent } from "react";
 
 interface IButtonProps {
-  onClick: Function;
   label: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: Function;
   className?: string;
 }
 
-const Button = ({ label, onClick, className }: IButtonProps) => {
+const Button: FunctionComponent<IButtonProps> = ({
+  label,
+  onClick,
+  className,
+  type,
+}) => {
   const styles = [
     "p-2",
     "bg-indigo-500",
@@ -17,7 +23,7 @@ const Button = ({ label, onClick, className }: IButtonProps) => {
     className,
   ].join(" ");
   return (
-    <button className={styles} onClick={() => onClick()}>
+    <button className={styles} onClick={() => onClick && onClick()} type={type}>
       {label.toLocaleUpperCase()}
     </button>
   );

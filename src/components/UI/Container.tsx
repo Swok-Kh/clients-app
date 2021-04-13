@@ -1,10 +1,10 @@
-import React, { ReactChild } from "react";
+import React, { FunctionComponent, ReactChild } from "react";
 
 interface IContainerProps {
   children: ReactChild;
 }
 
-const Container = ({ children }: IContainerProps) => {
+const Container: FunctionComponent<IContainerProps> = ({ children }) => {
   return <div className="max-w-7xl mx-auto p-1">{children}</div>;
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { FunctionComponent, useContext } from "react";
 import { IClientFull } from "../../services/api";
 import { ModalContext } from "../modal/ModalProvider";
 import Button from "../UI/Button";
@@ -7,7 +7,7 @@ interface IClientItemProps {
   client: IClientFull;
 }
 
-const ClientItem = ({ client }: IClientItemProps) => {
+const ClientItem: FunctionComponent<IClientItemProps> = ({ client }) => {
   const { openModal } = useContext(ModalContext);
   const { firstName, lastName, avatarUrl, phone } = client;
 
