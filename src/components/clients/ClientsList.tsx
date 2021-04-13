@@ -1,21 +1,24 @@
-import { FunctionComponent } from "react";
-import { useQuery } from "react-query";
-import { getClients, IClientFull } from "../../services/api";
+import { FunctionComponent, useContext } from "react";
+import { IClientFull } from "../../services/api";
 import ClientItem from "./ClientItem";
+import { ClientContext } from "./ClientsProvider";
 
-const Clients: FunctionComponent = () => {
-  const { data, isLoading, error } = useQuery("clients", getClients);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+const ClientsList: FunctionComponent = () => {
+  const { clients, error } = useContext(ClientContext);
 
   return (
     <ul className="space-y-4">
-      {data.getClients.map((client: IClientFull) => (
-        <ClientItem key={client.id} client={client} />
-      ))}
+      {error && (
+        <p className="text-center text-2xl italic">
+          Sorry. Something went wrong. Try later...
+        </p>
+      )}
+      {clients &&
+        clients.map((client: IClientFull) => (
+          <ClientItem key={client.id} client={client} />
+        ))}
     </ul>
   );
 };
 
-export default Clients;
+export default ClientsList;

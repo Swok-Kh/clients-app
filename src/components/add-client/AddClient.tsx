@@ -1,17 +1,21 @@
-import { useContext } from "react";
+import { FunctionComponent, useContext } from "react";
+import { ClientContext } from "../clients/ClientsProvider";
 import { ModalContext } from "../modal/ModalProvider";
 import Button from "../UI/Button";
 
-const AddClient = () => {
+const AddClient: FunctionComponent = () => {
   const { openModal } = useContext(ModalContext);
+  const { error } = useContext(ClientContext);
   return (
     <div className="fixed bottom-2 right-2">
-      <Button
-        label="Add"
-        onClick={() => {
-          openModal();
-        }}
-      />
+      {!error && (
+        <Button
+          label="Add"
+          onClick={() => {
+            openModal();
+          }}
+        />
+      )}
     </div>
   );
 };
