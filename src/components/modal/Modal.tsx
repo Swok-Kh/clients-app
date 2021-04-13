@@ -1,12 +1,7 @@
-import { FunctionComponent, useContext, useEffect } from "react";
+import { FunctionComponent, MouseEvent, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
-import {
-  IClientFull,
-  IClient,
-  updateClient,
-  addClient,
-} from "../../services/api";
+import { IClientFull, IClient } from "../../services/api";
+import { ClientContext } from "../clients/ClientsProvider";
 import Button from "../UI/Button";
 import ModalInput from "./ModalInput";
 import { ModalContext } from "./ModalProvider";
@@ -16,14 +11,14 @@ interface IModalProps {
 }
 
 const Modal: FunctionComponent<IModalProps> = ({ client }) => {
-  const { register, setValue, handleSubmit } = useForm<IClient>();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IClient>();
   const { closeModal } = useContext(ModalContext);
-  const updateMutation = useMutation(updateClient, {
-    onSuccess: () => closeModal(),
-  });
-  const addMutation = useMutation(addClient, {
-    onSuccess: () => closeModal(),
-  });
+  const { addClient, updateClient } = useContext(ClientContext);
 
   useEffect(() => {
     if (client) {
@@ -36,17 +31,23 @@ const Modal: FunctionComponent<IModalProps> = ({ client }) => {
   }, [client, setValue]);
 
   const onSubmit = (data: IClient) => {
-    if (client) {
-      updateMutation.mutate({ id: client.id, ...data });
-      return;
-    }
-    addMutation.mutate(data);
+    if (client) updateClient({ id: client.id, ...data });
+    else addClient(data);
+
+    closeModal();
   };
+
+  const handleBackdropClick = (event: MouseEvent) => {
+    if (event.target === event.currentTarget) closeModal();
+  };
+
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-50 flex items-center justify-center">
-      <div className="shadow-md bg-white rounded-md p-4">
+    <div
+      className="fixed top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-50 flex items-center justify-center"
+      onClick={handleBackdropClick}>
+      <div className="shadow-md bg-white rounded-md p-4 max-h-screen overflow-y-auto">
         <form
-          className="flex flex-col space-y-2"
+          className="flex flex-col space-y-2 "
           onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-xl font-medium">
             {client ? "Edit client" : "Add client"}
@@ -57,14 +58,21 @@ const Modal: FunctionComponent<IModalProps> = ({ client }) => {
             register={register}
             required
           />
+          {errors?.firstName && (
+            <p className="text-sm text-red-500">First name field is required</p>
+          )}
           <ModalInput
             name="lastName"
             label="Last name *"
             register={register}
             required
           />
+          {errors?.lastName && (
+            <p className="text-sm text-red-500">Last name field is required</p>
+          )}
           <ModalInput name="phone" label="Phone" register={register} />
           <ModalInput name="avatarUrl" label="Avatar URL" register={register} />
+          <div></div>
           <div className="flex justify-around">
             <Button type="submit" label="Ok" />
             <Button label="Cansel" onClick={() => closeModal()} />

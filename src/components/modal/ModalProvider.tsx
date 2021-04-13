@@ -1,4 +1,11 @@
-import { createContext, FunctionComponent, ReactChild, useState } from "react";
+import {
+  createContext,
+  FunctionComponent,
+  ReactChild,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { IClientFull } from "../../services/api";
 import Modal from "./Modal";
 
@@ -26,14 +33,26 @@ const ModalProvider: FunctionComponent<IModalProviderProps> = ({
 
   const openModal = (client: IClientFull | undefined) => {
     if (client) setClient(client);
-
     setIsOpen(true);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setClient(null);
     setIsOpen(false);
+    document.body.style.overflow = "";
   };
+
+  const handleModalKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.code === "Escape") closeModal();
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) document.addEventListener("keydown", handleModalKeyDown);
+    else document.removeEventListener("keydown", handleModalKeyDown);
+
+    return document.removeEventListener("keydown", handleModalKeyDown);
+  }, [handleModalKeyDown, isOpen]);
 
   return (
     <ModalContext.Provider value={{ isOpen, openModal, closeModal }}>
