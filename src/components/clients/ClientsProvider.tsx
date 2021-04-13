@@ -83,7 +83,7 @@ const ClientsProvider: FunctionComponent<IClientContextProps> = ({
         updateClient,
       }}>
       {children}
-      {isFetching && <Loader />}
+      {!!isFetching && <Loader />}
     </ClientContext.Provider>
   );
 };

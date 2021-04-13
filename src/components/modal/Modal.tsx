@@ -11,7 +11,12 @@ interface IModalProps {
 }
 
 const Modal: FunctionComponent<IModalProps> = ({ client }) => {
-  const { register, setValue, handleSubmit } = useForm<IClient>();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IClient>();
   const { closeModal } = useContext(ModalContext);
   const { addClient, updateClient } = useContext(ClientContext);
 
@@ -31,6 +36,7 @@ const Modal: FunctionComponent<IModalProps> = ({ client }) => {
 
     closeModal();
   };
+
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-50 flex items-center justify-center">
       <div className="shadow-md bg-white rounded-md p-4">
@@ -46,14 +52,21 @@ const Modal: FunctionComponent<IModalProps> = ({ client }) => {
             register={register}
             required
           />
+          {errors?.firstName && (
+            <p className="text-sm text-red-500">First name field is required</p>
+          )}
           <ModalInput
             name="lastName"
             label="Last name *"
             register={register}
             required
           />
+          {errors?.lastName && (
+            <p className="text-sm text-red-500">Last name field is required</p>
+          )}
           <ModalInput name="phone" label="Phone" register={register} />
           <ModalInput name="avatarUrl" label="Avatar URL" register={register} />
+          <div></div>
           <div className="flex justify-around">
             <Button type="submit" label="Ok" />
             <Button label="Cansel" onClick={() => closeModal()} />
